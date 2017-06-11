@@ -11,9 +11,12 @@ import java.util.Date;
 public class User {
     private Integer id;
     private String userName;
+    private String nickName;
     private String password;
     private String phone;
     private String email;
     private String ico;
-    private Date createTime;
+    private Integer role;
+    private Date regTime;
+    private String ip;
 }
