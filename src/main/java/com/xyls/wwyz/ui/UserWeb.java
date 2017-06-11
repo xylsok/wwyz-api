@@ -52,4 +52,11 @@ public class UserWeb {
     public User detail(@PathVariable("id")Integer id) {
         return userService.detail(id);
     }
+
+    @ApiOperation(value = "用户登录", notes = "用户登录")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public User login(@RequestBody User user,HttpServletRequest request){
+        User loginUser = userService.login(user,request);
+        return loginUser;
+    }
 }

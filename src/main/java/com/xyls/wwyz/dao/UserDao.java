@@ -26,4 +26,9 @@ public class UserDao extends JooqDao<UserRecord,User,Integer>{
     public List<User> getUsers() {
         return this.findAll();
     }
+
+    public User getByName(String username) {
+        UserRecord userRecord = create().selectFrom(USER).where(USER.USER_NAME.eq(username)).fetchOne();
+        return null!=userRecord?userRecord.into(User.class):null;
+    }
 }

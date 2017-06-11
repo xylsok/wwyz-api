@@ -2,6 +2,7 @@ package com.xyls.wwyz.inter;
 
 import com.xyls.wwyz.model.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ public interface UserService {
     void del(Integer id);
 
     User detail(Integer id);
+
+    User login(User user, HttpServletRequest request);
 }
