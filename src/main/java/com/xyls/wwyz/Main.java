@@ -16,6 +16,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
+        System.out.println("23");
     }
 
 }
