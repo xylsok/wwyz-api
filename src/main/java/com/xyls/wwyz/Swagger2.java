@@ -29,7 +29,7 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("wwyz-api")
+                .title("悟悟易主API管理平台")
                 .description("")
                 .build();
     }
