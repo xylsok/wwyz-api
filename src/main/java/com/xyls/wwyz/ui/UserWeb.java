@@ -48,6 +48,12 @@ public class UserWeb {
         userService.del(id);
     }
 
+    @ApiOperation(value = "更新用户头像", notes = "更新用户头像")
+    @RequestMapping(value = "/updateico", method = RequestMethod.PUT)
+    public void updateicon(@RequestBody User user) {
+        userService.updateicon(user);
+    }
+
     @ApiOperation(value = "详情", notes = "详情")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public User detail(@PathVariable("id") Integer id) {

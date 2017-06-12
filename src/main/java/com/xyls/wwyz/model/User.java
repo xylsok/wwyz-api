@@ -17,7 +17,7 @@ public class User {
     private String password;
     private String phone;
     private String email;
-    private String ico;
+    private String icon;
     private Integer role;
     private Date regTime;
     private String ip;

@@ -4,14 +4,18 @@ import com.xyls.wwyz.dao.UserDao;
 import com.xyls.wwyz.inter.UserService;
 import com.xyls.wwyz.model.LoginForm;
 import com.xyls.wwyz.model.User;
+import com.xyls.wwyz.utils.CreateCode;
 import com.xyls.wwyz.utils.PasswordHelper;
 import com.xyls.wwyz.utils.UserUtil;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +80,40 @@ public class UserSeviceImpl implements UserService {
             return newUser;
         } else {
             return createBadUser("错误的用户名或密码(WR)");
+        }
+    }
+
+    @Override
+    public void updateicon(User user) {
+        String fileName = GenerateImage(user.getIcon());
+        user.setIcon(fileName);
+        userDao.updateicon(user);
+    }
+
+    // base64字符串转化成图片
+    public static String GenerateImage(String imgStr) { //对字节数组字符串进行Base64解码并生成图片
+        if (imgStr == null) {
+            return null;
+        }
+        String fileName = CreateCode.getCode();
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            // Base64解码
+            byte[] b = decoder.decodeBuffer(imgStr);
+            for (int i = 0; i < b.length; ++i) {
+                if (b[i] < 0) {// 调整异常数据
+                    b[i] += 256;
+                }
+            }
+            // 生成jpeg图片
+            String imgFilePath = "/data/filecenter/wwyz-file/" + fileName + ".png";//新生成的图片
+            OutputStream out = new FileOutputStream(imgFilePath);
+            out.write(b);
+            out.flush();
+            out.close();
+            return fileName + ".png";
+        } catch (Exception e) {
+            return null;
         }
     }
 

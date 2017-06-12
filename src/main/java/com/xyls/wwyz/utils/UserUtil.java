@@ -15,7 +15,7 @@ public class UserUtil {
         user.setId(u.getId());
         user.setNickName(u.getNickName());
         user.setRole(u.getRole());
-        user.setIco(u.getIco());
+        user.setIcon(u.getIcon());
         user.setUserName(u.getUserName());
         return user;
     }

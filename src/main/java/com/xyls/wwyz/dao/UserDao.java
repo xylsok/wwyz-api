@@ -31,4 +31,8 @@ public class UserDao extends JooqDao<UserRecord,User,Integer>{
         UserRecord userRecord = create().selectFrom(USER).where(USER.USER_NAME.eq(username)).fetchOne();
         return null!=userRecord?userRecord.into(User.class):null;
     }
+
+    public void updateicon( User user) {
+        create().update(USER).set(USER.ICON,user.getIcon()).where(USER.ID.eq(user.getId())).execute();
+    }
 }

@@ -19,4 +19,6 @@ public interface UserService {
     User detail(Integer id);
 
     User login(LoginForm loginForm, HttpServletRequest request);
+
+    void updateicon(User user);
 }
