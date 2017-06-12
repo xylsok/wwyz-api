@@ -96,6 +96,7 @@ public class UserSeviceImpl implements UserService {
             return null;
         }
         String fileName = CreateCode.getCode();
+        imgStr = imgStr.replace("data:image/png;base64,","");
         BASE64Decoder decoder = new BASE64Decoder();
         try {
             // Base64解码
