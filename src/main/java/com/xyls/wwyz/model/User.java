@@ -25,7 +25,7 @@ public class User {
     private String token;
 
     private String message; //登录结果的描述，成功，出错信息等
-    private String product; //登录的产品， 如metel，用户中心等，根据clientId而来
     private Boolean success; //是否成功
-    private String wxId; //微信id, 部分接口使用.
+
+
 }

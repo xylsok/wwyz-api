@@ -5,6 +5,8 @@ import com.xyls.wwyz.inter.UserService;
 import com.xyls.wwyz.model.User;
 import com.xyls.wwyz.utils.PasswordHelper;
 import com.xyls.wwyz.utils.UserUtil;
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import java.util.Optional;
 @Service("usrtService")
 public class UserSeviceImpl implements UserService {
 
+    private RandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
+
     @Autowired
     UserDao userDao;
 
@@ -29,6 +33,8 @@ public class UserSeviceImpl implements UserService {
     public void reg(User user) {
         user.setRegTime(new Date());
         user.setIsActiveEmail(0);
+        user.setSalt(randomNumberGenerator.nextBytes().toHex());
+        user.setPassword(PasswordHelper.encryptPassword(user.getPassword(), user.getSalt()));
         userDao.save(user);
     }
 
@@ -49,7 +55,7 @@ public class UserSeviceImpl implements UserService {
 
     @Override
     public User login(User user, HttpServletRequest request) {
-        if(user.equals("") || user.equals("")){
+        if (user.equals("") || user.equals("")) {
             User loginUser = new User();
             loginUser.setSuccess(false);
             loginUser.setMessage("用户名或密码不能为空");
@@ -57,28 +63,27 @@ public class UserSeviceImpl implements UserService {
         }
         //04. 账密得user
         Optional<User> userByPwd = getUserByPwd(user.getUserName(), user.getPassword());
-        if(userByPwd.isPresent()){
+        if (userByPwd.isPresent()) {
             User newUser = userByPwd.get();
-            if(newUser.getUserName() == null || user.getUserName().equals("")){
+            if (newUser.getUserName() == null || user.getUserName().equals("")) {
                 user.setMessage("(UL)");
                 user.setSuccess(false);
                 return user;
             }
             user.setSuccess(true);
             //21. 生成token
-            funcService.createToken(user);
-            return user;
-        }
-        else{
+            funcService.createToken(newUser);
+            return newUser;
+        } else {
             return createBadUser("错误的用户名或密码(WR)");
         }
     }
 
-    public Optional<User> getUserByPwd(String username,String password){
+    public Optional<User> getUserByPwd(String username, String password) {
         User u = userDao.getByName(username);
         if (u != null) {
             //未激活的用户不允许登录
-            if (u.getIsActiveEmail()<=0) {
+            if (u.getIsActiveEmail() <= 0) {
                 return Optional.of(createBadUser("邮箱未激活"));
             }
             //密码加盐加密
@@ -93,6 +98,7 @@ public class UserSeviceImpl implements UserService {
         }
         return Optional.empty();
     }
+
     //20 创建非正常用户
     public User createBadUser(String msg) {
         User user = new User();
