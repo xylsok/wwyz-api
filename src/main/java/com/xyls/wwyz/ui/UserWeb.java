@@ -1,6 +1,7 @@
 package com.xyls.wwyz.ui;
 
 import com.xyls.wwyz.inter.UserService;
+import com.xyls.wwyz.model.LoginForm;
 import com.xyls.wwyz.model.User;
 import com.xyls.wwyz.utils.RequestUtil;
 import io.swagger.annotations.Api;
@@ -29,7 +30,7 @@ public class UserWeb {
     @ApiOperation(value = "用户注册", notes = "用户注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(@RequestBody User user, HttpServletRequest request) {
-        log.info("ip={}",RequestUtil.getUserIp(request));
+        log.info("ip={}", RequestUtil.getUserIp(request));
         user.setIp(RequestUtil.getUserIp(request));
         userService.reg(user);
         return null;
@@ -43,20 +44,20 @@ public class UserWeb {
 
     @ApiOperation(value = "删除用户", notes = "删除用户")
     @RequestMapping(value = "/del/{id}", method = RequestMethod.DELETE)
-    public void del(@PathVariable("id")Integer id) {
+    public void del(@PathVariable("id") Integer id) {
         userService.del(id);
     }
 
     @ApiOperation(value = "详情", notes = "详情")
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public User detail(@PathVariable("id")Integer id) {
+    public User detail(@PathVariable("id") Integer id) {
         return userService.detail(id);
     }
 
     @ApiOperation(value = "用户登录", notes = "用户登录")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public User login(@RequestBody User user,HttpServletRequest request){
-        User loginUser = userService.login(user,request);
+    public User login(@RequestBody LoginForm loginForm, HttpServletRequest request) {
+        User loginUser = userService.login(loginForm, request);
         return loginUser;
     }
 }

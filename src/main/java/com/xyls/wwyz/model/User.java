@@ -1,5 +1,6 @@
 package com.xyls.wwyz.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.Date;
  * Created by zhangzf on 17-6-11.
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     private Integer id;
     private String userName;
