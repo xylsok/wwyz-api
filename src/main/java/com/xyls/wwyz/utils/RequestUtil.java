@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  */
 public class RequestUtil {
     public static String getIp(HttpServletRequest request) {
-        List<String> ignoreList = new ArrayList<>();
+        List<String> ignoreList = new ArrayList();
         ignoreList.add("unknown");
         String userIp = StringUtil.getNotEmptyWithIgnores(ignoreList,
                 request.getHeader("X-real-ip"),
@@ -50,7 +50,7 @@ public class RequestUtil {
 
     public static Map<String, String> getAllIps(HttpServletRequest request, boolean printDebugInfo) {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap();
 
         Enumeration<String> attributeNames = request.getAttributeNames();
         while (attributeNames.hasMoreElements()) {
