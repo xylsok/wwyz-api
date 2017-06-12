@@ -47,7 +47,7 @@ public class TokenHelper {
         try {
             JwtBuilder builder = Jwts.builder();
             String base64KeyStr = TextCodec.BASE64.encode(secret);
-            Map map = new HashMap<>();
+            Map map = new HashMap();
             if (role != null) {
                 map.put("role", role);
             }
