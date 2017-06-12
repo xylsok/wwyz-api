@@ -1,4 +1,4 @@
-package net.gddata.organ.dao;
+package com.xyls.wwyz.dao;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.Configuration;
