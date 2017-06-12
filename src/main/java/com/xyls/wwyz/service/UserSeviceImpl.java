@@ -2,6 +2,7 @@ package com.xyls.wwyz.service;
 
 import com.xyls.wwyz.dao.UserDao;
 import com.xyls.wwyz.inter.UserService;
+import com.xyls.wwyz.model.LoginForm;
 import com.xyls.wwyz.model.User;
 import com.xyls.wwyz.utils.PasswordHelper;
 import com.xyls.wwyz.utils.UserUtil;
@@ -54,23 +55,22 @@ public class UserSeviceImpl implements UserService {
     }
 
     @Override
-    public User login(User user, HttpServletRequest request) {
-        if (user.equals("") || user.equals("")) {
+    public User login(LoginForm loginForm, HttpServletRequest request) {
+        if (loginForm.getUsername().equals("") || loginForm.getPassword().equals("")) {
             User loginUser = new User();
             loginUser.setSuccess(false);
             loginUser.setMessage("用户名或密码不能为空");
-            return user;
+            return loginUser;
         }
         //04. 账密得user
-        Optional<User> userByPwd = getUserByPwd(user.getUserName(), user.getPassword());
+        Optional<User> userByPwd = getUserByPwd(loginForm.getUsername(), loginForm.getPassword());
         if (userByPwd.isPresent()) {
             User newUser = userByPwd.get();
-            if (newUser.getUserName() == null || user.getUserName().equals("")) {
-                user.setMessage("(UL)");
-                user.setSuccess(false);
-                return user;
+            if (newUser.getUserName() == null || newUser.getUserName().equals("")) {
+                newUser.setSuccess(false);
+                return newUser;
             }
-            user.setSuccess(true);
+            newUser.setSuccess(true);
             //21. 生成token
             funcService.createToken(newUser);
             return newUser;

@@ -1,5 +1,6 @@
 package com.xyls.wwyz.inter;
 
+import com.xyls.wwyz.model.LoginForm;
 import com.xyls.wwyz.model.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,5 +18,5 @@ public interface UserService {
 
     User detail(Integer id);
 
-    User login(User user, HttpServletRequest request);
+    User login(LoginForm loginForm, HttpServletRequest request);
 }
