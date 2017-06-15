@@ -27,7 +27,7 @@ import java.util.Random;
  */
 @Api(value = "文件上传",description = "文件上传接口")
 @Controller
-@RequestMapping("upladweb")
+@RequestMapping("uploadweb")
 public class UploadWeb extends BaseWeb {
 
     @Autowired

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailSendUtil {
 
-    @Value("${spring.mail.usernam}")
+    @Value("${spring.mail.username}")
     private String emailServer;
 
     @Autowired
@@ -40,8 +40,12 @@ public class EmailSendUtil {
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(content);
 
+        try {
+            javaMailSender.send(simpleMailMessage);
 
-        javaMailSender.send(simpleMailMessage);
+        }catch (Exception e){
+
+        }
         return true;
     }
 }
